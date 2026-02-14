@@ -4,7 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 /** Consider user "online" if lastSeenAt is within this many ms. */
-export const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
+const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 
     await prisma.user.update({
       where: { id: session.user.id },
-      data: { lastSeenAt: online ? new Date() : null },
+      data: { lastSeenAt: online ? new Date() : null } as { lastSeenAt: Date | null },
     });
 
     return NextResponse.json({ ok: true });
