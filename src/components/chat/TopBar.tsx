@@ -9,7 +9,7 @@ type TopBarProps = {
   searchValue?: string;
   onSearchChange?: (value: string) => void;
   /** Ref to focus the search input (e.g. for Win+K / ⌘+K hotkey). */
-  searchInputRef?: React.RefObject<HTMLInputElement | null>;
+  searchInputRef?: React.RefObject<HTMLInputElement>;
 };
 
 export function TopBar({
