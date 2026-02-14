@@ -1,0 +1,285 @@
+Wedding AI — CORE MASTER FLOW (v1.2)
+0) CORE Role
+
+CORE is the global orchestrator.
+CORE:
+
+starts the conversation and collects the minimum required inputs,
+
+decides which category comes next,
+
+launches the category flow (Venue / Music / etc.),
+
+tracks progress and state,
+
+generates recap + export.
+
+CORE does NOT recommend vendors directly (recommendations are handled inside each category flow via rules).
+
+1) Master Order (official stage order)
+
+The default stage order is:
+
+Venue (S#)
+
+Music (M#)
+
+Photo/Video routing: Photo (F#) + Video (V#) or Team (FV#)
+
+Decor (D#)
+
+FX (FX#)
+
+Transport (T#)
+
+Summary + PDF Export + Dashboard update
+
+Transition rule:
+
+after each completed stage, CORE automatically moves to the next unfinished stage in this list.
+
+2) Global State (maintained by CORE)
+
+CORE maintains a persistent state for each wedding (one wedding_profile per user context; backend resolves wedding_id before flows run).
+
+2.1. Status per category (wedding_profile.progress.category_status)
+
+Each category has one of the following statuses (stored in progress.category_status: venue, music, photograph, video, fv, decor, fx, transport, photo_video_routing):
+
+not_started — category not entered yet
+
+in_progress — currently being processed
+
+open — shortlist/options exist, but no final decision
+
+locked — final choice confirmed (contract / deposit / explicit "we won't change")
+
+skipped_by_choice — couple explicitly does not want this category
+
+skipped_locked_elsewhere — category is covered by another choice (e.g. FV# replaces Photo & Video)
+
+2.2. Current stage (wedding_profile.progress.current_stage)
+
+current_stage = the category currently running (e.g. venue, music, etc.)
+
+2.3. Completed stages (wedding_profile.progress.completed_stages)
+
+completed_stages = categories with status locked, skipped_by_choice, or skipped_locked_elsewhere.
+
+3) Start (INTRO) + Purpose
+
+AI starts with a short, clear intro:
+
+Who it is: a wedding planning assistant (language set to RO/RU as configured).
+
+What it does: guides step-by-step, explains differences, and generates a final summary + PDF.
+
+Promise: "I ask only what's strictly necessary; the rest is inferred from your choices."
+
+4) Minimum Required Inputs (max 3 critical questions)
+
+CORE asks questions only if the data is missing.
+
+Critical inputs for MVP CORE (map to wedding_profile.inputs):
+
+inputs.guest_count (estimate accepted)
+
+inputs.budget_total (total or range)
+
+inputs.wants_symbolic_ceremony (yes/no)
+
+Rules:
+
+No filler questions.
+
+If budget is unknown → accept a range or "show options first".
+
+If guest count is unknown → accept an estimate (e.g. 80–100).
+
+5) Planning Status Detection (what's already done)
+
+CORE quickly determines the couple's current planning stage.
+
+5.1. Key question
+
+"Do you already have any vendors booked? (e.g. venue, music, photo/video)"
+
+5.2. Mandatory definitions
+
+Locked = couple explicitly confirms final choice / deposit / contract.
+
+Open = "still thinking / want alternatives / not sure".
+
+If ambiguous → default to Open (safer).
+
+CORE sets status per category accordingly:
+
+venue chosen and final → venue_status = locked
+
+venue chosen but wants alternatives → venue_status = open
+
+no venue → venue_status = not_started
+
+(If the selected vendor exists in DB, save its ID to choices.*; otherwise save the name as free text.)
+
+6) Next Stage Selection Rule
+
+After initial state setup, CORE decides current_stage as follows:
+
+Take the master order.
+
+Skip categories with status:
+
+locked
+
+skipped_by_choice
+
+skipped_locked_elsewhere
+
+The first remaining category with not_started or open becomes current_stage.
+
+CORE then launches that category flow.
+
+7) "DONE" Rule per Category (when CORE moves on)
+
+CORE never guesses completion. A category is DONE when:
+
+status becomes locked, or
+
+user explicitly requests skipped_by_choice, or
+
+category becomes skipped_locked_elsewhere.
+
+Notes:
+
+If only a shortlist exists and no decision is made → status stays open.
+
+To keep momentum, CORE may continue to the next category and return later.
+
+8) Transition After a Category Finishes
+
+When a category flow ends, CORE automatically:
+
+Gives a 1–2 sentence recap ("Venue finalized: X.")
+
+Updates the category status.
+
+Selects the next stage using the rule in section 6.
+
+Clearly states: "Next stage: [Category]."
+
+Launches the next category flow.
+
+9) Photo/Video Routing (central rule)
+
+CORE manages routing logic:
+
+9.1. Routing question (only if unclear)
+
+"Do you prefer:
+A) separate photographer and videographer, or
+B) a combined photo+video team?"
+
+9.2. Status rules
+
+If Team (FV#) selected:
+
+fv_team_status = in_progress/open/locked
+
+photo_status = skipped_locked_elsewhere
+
+video_status = skipped_locked_elsewhere
+
+If separate selected:
+
+photo_status and video_status remain active
+
+fv_team_status = skipped_by_choice (or equivalent)
+
+9.3. Switch policy (important)
+
+Users may switch anytime:
+
+Separate → Team:
+
+Photo/Video become skipped_locked_elsewhere (replaced, not deleted)
+
+Team → Separate:
+
+FV# becomes open or skipped_by_choice
+
+Photo/Video return to not_started (or open if shortlist existed)
+
+10) Budget Donut / Dashboard Budget View (activation condition)
+
+CORE shows budget allocation visuals only if:
+
+inputs.guest_count is known, and
+
+inputs.budget_total (or clear range) is known.
+
+If either is missing:
+
+CORE skips budget visuals and continues.
+
+11) Special Case: "All vendors booked"
+
+If the user says everything is already booked, CORE enters Validation + Summary mode (no upsell):
+
+Detect missing categories (e.g. no transport, no video).
+
+Check obvious incompatibilities (e.g. venue forbids FX) — invoke rules for compatibility checks.
+
+Provide recap + offer PDF export.
+
+Optionally ask: "Do you want to compare 1–2 alternatives?" (only if user asks).
+
+12) Skip Rule (explicit opt-out)
+
+If the user explicitly says "We don't want X":
+
+set X_status = skipped_by_choice
+
+immediately move to the next unfinished category.
+
+This must appear clearly in recap/export as an intentional skip.
+
+13) Global Completion (Summary + Export)
+
+When all categories are either:
+
+locked, or
+
+skipped_* (per master order),
+
+CORE:
+
+generates a final summary (chosen + open + skipped)
+
+offers PDF export
+
+saves state to the dashboard
+
+ends with: "We can revisit any open category anytime."
+
+14) Conversation Principles
+
+CORE must:
+
+ask few, clear questions,
+
+always explain why it asks,
+
+never dive into vendor-level details (handled by category flows + rules),
+
+preserve progress (never re-ask known info).
+
+15) Architecture Note (v1.2)
+
+CORE and category flows:
+- COLLECT INPUT only (user answers, preferences, constraints).
+- INVOKE rules_*.yaml for all logic: filtering, scoring, ranking, tier deduction.
+- USE compare_definitions.yaml for display: card_fields, labels, good/better/best text.
+- Do NOT implement scoring or evaluation logic inside flows.
+- Do NOT create weddings — the backend creates/assigns wedding records; flows work only with a wedding_profile already loaded by the backend.
+- Do NOT manage user login or authentication — auth (magic link) is handled by the backend; flows operate after user_id and wedding_id are resolved.
