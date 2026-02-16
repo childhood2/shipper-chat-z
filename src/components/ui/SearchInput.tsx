@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 
 type SearchInputProps = {
@@ -31,6 +31,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     ref
   ) {
     const isControlled = value !== undefined && onChange !== undefined;
+    const [imageError, setImageError] = useState(false);
+    const showImage = shortcutBadgeImage && !imageError;
     return (
       <div className={`flex items-center gap-2 ${className}`}>
         <SearchIcon size={14} className="shrink-0 text-icon-soft" />
@@ -46,13 +48,14 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           className={`flex-1 min-w-0 border-none bg-transparent text-12 font-normal text-text-main placeholder:text-text-soft outline-none ${inputClassName}`}
         />
         {(shortcutBadge || shortcutBadgeImage) && (
-          shortcutBadgeImage ? (
+          showImage ? (
             <img
               src={shortcutBadgeImage}
               alt={shortcutBadge ?? "Shortcut"}
               className="h-6 shrink-0 object-contain"
               width={56}
               height={24}
+              onError={() => setImageError(true)}
             />
           ) : (
             <span className="h-6 px-1.5 bg-bg-cards rounded-6 text-text-heading-secondary text-12 font-normal shrink-0">
