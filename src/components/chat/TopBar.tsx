@@ -19,7 +19,7 @@ export function TopBar({
 }: TopBarProps) {
   const isWin = typeof navigator !== "undefined" && /Win/i.test(navigator.platform);
   const shortcutBadge = isWin ? "Win+K" : "⌘+K";
-  const shortcutBadgeImage = isWin ? "/shortcut-win-k.png" : undefined;
+  const shortcutBadgeImage = isWin ? "/shortcut-win-k.png" : "/shortcut-cmd-k.png";
   return (
     <header className="self-stretch bg-surface-default rounded-16 flex items-center justify-between w-full shrink-0 px-6 py-3">
       <div className="flex items-center gap-2">
