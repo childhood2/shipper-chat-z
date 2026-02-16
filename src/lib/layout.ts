@@ -1,0 +1,1 @@
+export const CONTACT_INFO_PANEL_GAP_PX = 21;

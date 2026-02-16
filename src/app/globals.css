@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Shipper Chat MVP — Design tokens (from DESIGN_AND_PROJECT_SPEC.md §4) */
+
+:root {
+  /* Colors */
+  --icon-neutral-main: #111625;
+  --icon-neutral-white: #ffffff;
+  --text-neutral-main: #111625;
+  --text-placeholder: #8B8B8B;
+  --background-bg-primary-cards: #F3F3EE;
+  --border-border-primary: #E8E5DF;
+  --semantic-brand-500: #1E9A80;
+  --text-state-error: #DF1C41;
+  --bg-surface-weak: #F7F9FB;
+  --background-bg-brand-primary: #F0FDF4;
+  --border-border-brand: #1E9A80;
+  --Icon-Neutral-Icon-Primary: #151515;
+  --Icon-Neutral-Icon-Primary-Inverted: #ffffff;
+  --icon-neutral-sub: #596881;
+  --icon-neutral-soft: #8796AF;
+  --text-neutral-soft: #8796AF;
+  --text-heading-secondary: #404040;
+  --bg-surface-default: #ffffff;
+  --icons-icon-secondary: #262626;
+  --background-bg-tertiary: #F8F8F5;
+  --background-bg-senary: #E8E5DF;
+  --border-border-secondary: #F3F3EE;
+  --text-heading-primary: #1C1C1C;
+
+  /* Spacing (px) */
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+
+  /* Border radius */
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-24: 24px;
+
+  /* Shadows */
+  --shadow-popup: 0px 0px 24px rgba(0, 0, 0, 0.06);
+  --shadow-popup-strong: 0px 4px 32px rgba(0, 0, 0, 0.12);
+  --shadow-tab: 0px 0px 16px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: var(--text-neutral-main);
+  background: var(--background-bg-primary-cards);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  font-family: inherit;
+}
