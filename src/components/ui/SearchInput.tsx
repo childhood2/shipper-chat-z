@@ -36,8 +36,9 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     useEffect(() => {
       setImageError(false);
     }, [shortcutBadgeImage]);
-    const showImage = shortcutBadgeImage && !imageError;
-    // Use absolute URL so the image loads correctly in dev and production
+    const isDataUrl = shortcutBadgeImage?.startsWith("data:");
+    const showImage = shortcutBadgeImage && (isDataUrl || !imageError);
+    // Use absolute URL for path-based images; data URLs are used as-is
     const imageSrc =
       typeof window !== "undefined" && shortcutBadgeImage?.startsWith("/")
         ? window.location.origin + shortcutBadgeImage
@@ -65,7 +66,9 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               className="h-6 shrink-0 object-contain"
               width={56}
               height={24}
-              onError={() => setImageError(true)}
+              onError={() => {
+                if (!shortcutBadgeImage?.startsWith("data:")) setImageError(true);
+              }}
             />
           ) : (
             <span className="h-6 px-1.5 bg-bg-cards rounded-6 text-text-heading-secondary text-12 font-normal shrink-0">

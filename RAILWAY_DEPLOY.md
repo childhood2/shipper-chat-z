@@ -68,6 +68,13 @@ If you don’t set a custom start command, run migrations once manually (see ste
 2. Wait for the build to finish. The first deploy may take a few minutes.
 3. Open your generated domain (e.g. `https://shipper-chat-production-xxxx.up.railway.app`).
 
+### If the header search shows "Win+K" text instead of the shortcut image
+
+1. In Railway, open **Deployments** and check the **commit** of the latest deployment. It should match the latest `main` (e.g. a commit message like "fix: embed shortcut badge images as data URLs").
+2. If the commit is older, push your latest code and wait for the new deploy, or click **Redeploy**.
+3. If you have a **Clear build cache** (or similar) option, use it and redeploy so the new bundle is built.
+4. Hard-refresh the app in the browser (Ctrl+Shift+R or Cmd+Shift+R) to avoid cached JS.
+
 ---
 
 ## 7. (Optional) Run migrations manually
