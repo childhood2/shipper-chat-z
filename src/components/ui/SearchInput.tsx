@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import { SearchIcon } from "@/components/icons";
 
 type SearchInputProps = {
@@ -32,7 +32,16 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   ) {
     const isControlled = value !== undefined && onChange !== undefined;
     const [imageError, setImageError] = useState(false);
+    // Reset error when image URL changes (e.g. switch platform or retry)
+    useEffect(() => {
+      setImageError(false);
+    }, [shortcutBadgeImage]);
     const showImage = shortcutBadgeImage && !imageError;
+    // Use absolute URL so the image loads correctly in dev and production
+    const imageSrc =
+      typeof window !== "undefined" && shortcutBadgeImage?.startsWith("/")
+        ? window.location.origin + shortcutBadgeImage
+        : shortcutBadgeImage;
     return (
       <div className={`flex items-center gap-2 ${className}`}>
         <SearchIcon size={14} className="shrink-0 text-icon-soft" />
@@ -50,7 +59,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         {(shortcutBadge || shortcutBadgeImage) && (
           showImage ? (
             <img
-              src={shortcutBadgeImage}
+              key={shortcutBadgeImage}
+              src={imageSrc}
               alt={shortcutBadge ?? "Shortcut"}
               className="h-6 shrink-0 object-contain"
               width={56}
