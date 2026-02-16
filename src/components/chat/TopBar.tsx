@@ -3,9 +3,10 @@
 import { SearchInput } from "@/components/ui/SearchInput";
 import { IconButton } from "@/components/ui/IconButton";
 import { MessageBubbleIcon, BellIcon, SettingsIcon } from "@/components/icons";
-// Bundled so they work in dev and in standalone/production (no reliance on public folder)
-import shortcutWinKImg from "@/assets/shortcut-win-k.png";
-import commandKeyImg from "@/assets/command.png";
+import {
+  SHORTCUT_WIN_K_DATA_URL,
+  SHORTCUT_CMD_K_DATA_URL,
+} from "@/assets/shortcutBadges";
 
 type TopBarProps = {
   /** Controlled value for header search (search in selected chat). */
@@ -22,7 +23,7 @@ export function TopBar({
 }: TopBarProps) {
   const isWin = typeof navigator !== "undefined" && /Win/i.test(navigator.platform);
   const shortcutBadge = isWin ? "Win+K" : "⌘+K";
-  const shortcutBadgeImage = isWin ? shortcutWinKImg.src : commandKeyImg.src;
+  const shortcutBadgeImage = isWin ? SHORTCUT_WIN_K_DATA_URL : SHORTCUT_CMD_K_DATA_URL;
   return (
     <header className="self-stretch bg-surface-default rounded-16 flex items-center justify-between w-full shrink-0 px-6 py-3">
       <div className="flex items-center gap-2">
