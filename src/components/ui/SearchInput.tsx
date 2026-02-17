@@ -1,16 +1,56 @@
 "use client";
 
-import { forwardRef, useState, useEffect } from "react";
+import { forwardRef } from "react";
 import { SearchIcon } from "@/components/icons";
+
+function WinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      className={className}
+      aria-hidden
+    >
+      <path d="M0 0h7v7H0V0zm8 0h8v7H8V0zM0 8h7v8H0V8zm8 0h8v8H8V8z" />
+    </svg>
+  );
+}
+
+function ShortcutBadge({
+  isWin,
+  keyLabel = "K",
+  className = "",
+}: {
+  isWin: boolean;
+  keyLabel?: string;
+  className?: string;
+}) {
+  return (
+    <span
+      className={`inline-flex h-6 items-center gap-1 px-2 rounded-md bg-[#E8E5DF] text-[#404040] text-12 font-semibold shrink-0 ${className}`}
+      title={isWin ? `Win+${keyLabel}` : `⌘+${keyLabel}`}
+    >
+      {isWin ? (
+        <WinIcon className="w-3.5 h-3.5" />
+      ) : (
+        <span className="text-[0.7rem] leading-none">⌘</span>
+      )}
+      <span className="text-[0.65rem] font-bold opacity-80">+</span>
+      <span>{keyLabel}</span>
+    </span>
+  );
+}
 
 type SearchInputProps = {
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
-  /** Shortcut label (e.g. "Win+K") for accessibility; shown as text if shortcutBadgeImage is not set. */
+  /** Shortcut label (e.g. "Win+K") for accessibility. */
   shortcutBadge?: string;
-  /** Image path for the shortcut badge (e.g. /shortcut-win-k.png). When set, this image is shown instead of shortcutBadge text. */
-  shortcutBadgeImage?: string;
+  /** Show shortcut badge (icon + K) with rounded rectangle. Uses platform: Win on Windows, ⌘ on Mac. */
+  shortcutKey?: string;
+  /** Platform: true = Windows, false = Mac. Default from navigator.platform. */
+  isWin?: boolean;
   className?: string;
   inputClassName?: string;
   "aria-label"?: string;
@@ -23,7 +63,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       value,
       onChange,
       shortcutBadge,
-      shortcutBadgeImage,
+      shortcutKey,
+      isWin = typeof navigator !== "undefined" && /Win/i.test(navigator.platform),
       className = "",
       inputClassName = "",
       "aria-label": ariaLabel = "Search",
@@ -31,18 +72,9 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     ref
   ) {
     const isControlled = value !== undefined && onChange !== undefined;
-    const [imageError, setImageError] = useState(false);
-    // Reset error when image URL changes (e.g. switch platform or retry)
-    useEffect(() => {
-      setImageError(false);
-    }, [shortcutBadgeImage]);
-    const isDataUrl = shortcutBadgeImage?.startsWith("data:");
-    const showImage = shortcutBadgeImage && (isDataUrl || !imageError);
-    // Use absolute URL for path-based images; data URLs are used as-is
-    const imageSrc =
-      typeof window !== "undefined" && shortcutBadgeImage?.startsWith("/")
-        ? window.location.origin + shortcutBadgeImage
-        : shortcutBadgeImage;
+    const showShortcut = shortcutBadge != null || shortcutKey != null;
+    const keyLabel = shortcutKey ?? (shortcutBadge?.split("+").pop() ?? "K");
+
     return (
       <div className={`flex items-center gap-2 ${className}`}>
         <SearchIcon size={14} className="shrink-0 text-icon-soft" />
@@ -57,24 +89,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           aria-label={ariaLabel}
           className={`flex-1 min-w-0 border-none bg-transparent text-12 font-normal text-text-main placeholder:text-text-soft outline-none ${inputClassName}`}
         />
-        {(shortcutBadge || shortcutBadgeImage) && (
-          showImage ? (
-            <img
-              key={shortcutBadgeImage}
-              src={imageSrc}
-              alt={shortcutBadge ?? "Shortcut"}
-              className="h-6 shrink-0 object-contain"
-              width={56}
-              height={24}
-              onError={() => {
-                if (!shortcutBadgeImage?.startsWith("data:")) setImageError(true);
-              }}
-            />
-          ) : (
-            <span className="h-6 px-1.5 bg-bg-cards rounded-6 text-text-heading-secondary text-12 font-normal shrink-0">
-              {shortcutBadge}
-            </span>
-          )
+        {showShortcut && (
+          <ShortcutBadge isWin={isWin} keyLabel={keyLabel} />
         )}
       </div>
     );

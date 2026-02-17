@@ -70,13 +70,13 @@ export function Sidebar({ onLogoClick }: SidebarProps) {
                 <Link
                   key={label}
                   href={href}
-                  className={`inline-flex h-11 box-border w-full min-w-[44px] max-w-[44px] items-center justify-start gap-2 rounded-8 px-3 py-2 transition-colors ${
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-8 transition-colors ${
                     isActive
                       ? "bg-bg-brand outline outline-1 outline-offset-[-1px] outline-brand"
                       : ""
                   }`}
                 >
-                  <span className="flex shrink-0 items-center justify-center text-[var(--Icon-Neutral-Icon-Primary,#151515)]">
+                  <span className="flex h-5 w-5 items-center justify-center text-[var(--Icon-Neutral-Icon-Primary,#151515)]">
                     <Icon size={20} />
                   </span>
                 </Link>
@@ -89,9 +89,9 @@ export function Sidebar({ onLogoClick }: SidebarProps) {
         <div className="flex w-11 flex-col items-center justify-center gap-6">
           <Link
             href="#"
-            className="inline-flex h-11 box-border w-full min-w-[44px] max-w-[44px] items-center justify-start gap-2 rounded-8 px-3 py-2 transition-opacity hover:opacity-80"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-8 transition-opacity hover:opacity-80"
           >
-            <span className="flex shrink-0 items-center justify-center text-[var(--Icon-Neutral-Icon-Primary,#151515)]">
+            <span className="flex h-5 w-5 items-center justify-center text-[var(--Icon-Neutral-Icon-Primary,#151515)]">
               <StarIcon size={20} />
             </span>
           </Link>
