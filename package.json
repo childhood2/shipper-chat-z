@@ -7,7 +7,7 @@
     "dev:debug": "cross-env NODE_OPTIONS=--unhandled-rejections=strict next dev",
     "build": "next build",
     "postbuild": "node scripts/copy-standalone-assets.js",
-    "start": "node .next/standalone/server.js",
+    "start": "node scripts/start-standalone.js",
     "lint": "next lint",
     "postinstall": "prisma generate",
     "db:generate": "prisma generate",
