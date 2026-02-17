@@ -17,7 +17,8 @@ export async function GET(req: NextRequest) {
   const dataUrl =
     platform === "mac" ? SHORTCUT_CMD_K_DATA_URL : SHORTCUT_WIN_K_DATA_URL;
   const body = dataUrlToUint8Array(dataUrl);
-  return new NextResponse(body, {
+  const blob = new Blob([body], { type: "image/png" });
+  return new NextResponse(blob, {
     headers: {
       "Content-Type": "image/png",
       "Cache-Control": "public, max-age=31536000, immutable",
