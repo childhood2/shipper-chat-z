@@ -37,15 +37,16 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ results: [] });
     }
 
-    const placeholders = chatIds.map(() => "?").join(",");
+    const inPlaceholders = chatIds.map((_, i) => `$${i + 1}`).join(",");
+    const likeParam = chatIds.length + 1;
     const likePattern = `%${q.toLowerCase()}%`;
     const messages = (await prisma.$queryRawUnsafe<
       { id: string; chatId: string; content: string; createdAt: Date }[]
     >(
       `SELECT id, "chatId", content, "createdAt"
        FROM "Message"
-       WHERE "chatId" IN (${placeholders})
-         AND LOWER(content) LIKE ?
+       WHERE "chatId" IN (${inPlaceholders})
+         AND LOWER(content) LIKE $${likeParam}
        ORDER BY "createdAt" DESC
        LIMIT 80`,
       ...chatIds,

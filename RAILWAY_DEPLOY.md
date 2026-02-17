@@ -48,7 +48,7 @@ In your Railway project, open the service → **Variables** (or **Settings** →
 
 ## 5. Build and start commands (optional but recommended)
 
-Railway usually auto-detects Next.js. To run Prisma migrations on every deploy:
+This app uses `output: "standalone"` in Next.js, so **Start Command** must run the standalone server (not `next start`). To run Prisma migrations on every deploy:
 
 1. In the service, go to **Settings** → **Deploy** (or **Build & Deploy**).
 2. **Build Command:** leave default (e.g. `npm run build` or auto).
@@ -56,7 +56,7 @@ Railway usually auto-detects Next.js. To run Prisma migrations on every deploy:
    ```bash
    npx prisma migrate deploy && npm start
    ```
-   This runs Supabase/Prisma migrations before starting the app.
+   The `package.json` "start" script runs `node .next/standalone/server.js`, which is required when using standalone output.
 
 If you don’t set a custom start command, run migrations once manually (see step 7) or from a one-off job.
 

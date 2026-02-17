@@ -37,7 +37,7 @@ export async function GET(
     const otherUserId = membership.chat.members[0].userId;
     try {
       const rows = (await prisma.$queryRawUnsafe(
-        `SELECT "lastSeenAt" FROM "User" WHERE "id" = ?`,
+        `SELECT "lastSeenAt" FROM "User" WHERE "id" = $1`,
         otherUserId
       )) as { lastSeenAt: Date | string | null }[];
       const lastSeenAt = rows[0]?.lastSeenAt

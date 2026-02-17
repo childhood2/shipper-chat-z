@@ -42,7 +42,7 @@ export async function GET() {
     let lastSeenByUserId: Record<string, string | null> = {};
     if (otherUserIds.length > 0) {
       try {
-        const placeholders = otherUserIds.map(() => "?").join(",");
+        const placeholders = otherUserIds.map((_, i) => `$${i + 1}`).join(",");
         const rows = (await prisma.$queryRawUnsafe(
           `SELECT "id", "lastSeenAt" FROM "User" WHERE "id" IN (${placeholders})`,
           ...otherUserIds
