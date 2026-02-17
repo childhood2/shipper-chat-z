@@ -11,12 +11,10 @@ type MenuPopupProps = {
   onClose: () => void;
 };
 
-const iconWrapDefault = "flex shrink-0 items-center justify-center rounded-6 bg-bg-cards p-1.5";
-const iconWrapWhite = "flex shrink-0 items-center justify-center rounded-6 bg-white p-1.5";
+const iconWrapDefault =
+  "flex shrink-0 items-center justify-center rounded-6 bg-bg-cards p-1.5 text-[#28303F] transition-colors group-hover:bg-white";
 const menuRowClass =
-  "inline-flex w-full items-center gap-2 rounded-8 px-1.5 py-1.5 text-14 font-medium leading-5 text-text-heading-primary";
-const menuRowTertiaryClass =
-  "inline-flex w-full items-center gap-2 rounded-8 bg-bg-tertiary px-1.5 py-1.5 text-14 font-medium leading-5 text-text-heading-primary";
+  "group inline-flex w-full items-center gap-2 rounded-8 px-1.5 py-1.5 text-14 font-medium leading-5 text-text-heading-primary transition-colors hover:bg-surface-hover";
 
 export function MenuPopup({ user, onClose }: MenuPopupProps) {
   const popupRef = useRef<HTMLDivElement>(null);
@@ -56,13 +54,13 @@ export function MenuPopup({ user, onClose }: MenuPopupProps) {
             </Link>
             <button
               type="button"
-              className={menuRowTertiaryClass}
+              className={menuRowClass}
               onClick={() => {
                 const name = typeof window !== "undefined" ? window.prompt("Rename file", "My file") : null;
                 if (name != null && name.trim()) onClose();
               }}
             >
-              <span className={iconWrapWhite}>
+              <span className={iconWrapDefault}>
                 <EditIcon size={16} />
               </span>
               Rename file

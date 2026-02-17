@@ -13,7 +13,7 @@ const svg = (w: number, h: number, viewBox: string, className?: string) => ({
 export function ArrowRightIcon({ className, size = 16 }: IconProps) {
   const s = size;
   return (
-    <svg {...svg(s, s, "0 0 16 16", className)} fill="#09090B">
+    <svg {...svg(s, s, "0 0 16 16", className)} fill="currentColor">
       <path fillRule="evenodd" clipRule="evenodd" d="M9.64583 11.7238C9.86146 11.5513 9.89642 11.2366 9.72391 11.021L7.30712 7.99999L9.72391 4.97901C9.89642 4.76337 9.86146 4.44873 9.64583 4.27622C9.43019 4.10372 9.11555 4.13868 8.94304 4.35431L6.27638 7.68764C6.13029 7.87025 6.13029 8.12973 6.27638 8.31234L8.94304 11.6457C9.11555 11.8613 9.43019 11.8963 9.64583 11.7238Z" />
     </svg>
   );
@@ -22,7 +22,7 @@ export function ArrowRightIcon({ className, size = 16 }: IconProps) {
 export function EditIcon({ className, size = 16 }: IconProps) {
   const s = size;
   return (
-    <svg {...svg(s, s, "0 0 16 16", className)} stroke="#28303F" strokeWidth="1.5" strokeLinecap="round">
+    <svg {...svg(s, s, "0 0 16 16", className)} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
       <path d="M2 14H14M9.18961 3.54114C9.18961 3.54114 9.18961 4.63089 10.2794 5.72064C11.3691 6.81039 12.4589 6.81039 12.4589 6.81039M4.87975 11.992L7.16823 11.6651C7.49833 11.618 7.80424 11.465 8.04003 11.2292L13.5486 5.72064C14.1505 5.11879 14.1505 4.14299 13.5486 3.54114L12.4589 2.45139C11.857 1.84954 10.8812 1.84954 10.2794 2.45139L4.77078 7.95997C4.53499 8.19576 4.38203 8.50167 4.33488 8.83177L4.00795 11.1202C3.9353 11.6288 4.3712 12.0647 4.87975 11.992Z" />
     </svg>
   );
@@ -31,7 +31,7 @@ export function EditIcon({ className, size = 16 }: IconProps) {
 export function GiftIcon({ className, size = 16 }: IconProps) {
   const s = size;
   return (
-    <svg {...svg(s, s, "0 0 16 16", className)} stroke="#28303F" strokeWidth="1.5" strokeLinecap="round">
+    <svg {...svg(s, s, "0 0 16 16", className)} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
       <path d="M2.66683 7.33333H13.3335M2.66683 7.33333C1.93045 7.33333 1.3335 6.73637 1.3335 6V5.33333C1.3335 4.59695 1.93045 3.99999 2.66683 3.99999H13.3335C14.0699 3.99999 14.6668 4.59695 14.6668 5.33333V6C14.6668 6.73637 14.0699 7.33333 13.3335 7.33333M2.66683 7.33333L2.66683 13.3333C2.66683 14.0697 3.26378 14.6667 4.00016 14.6667H12.0002C12.7365 14.6667 13.3335 14.0697 13.3335 13.3333V7.33333M8.00016 3.99999H10.6668C11.4032 3.99999 12.0002 3.40304 12.0002 2.66666C12.0002 1.93028 11.4032 1.33333 10.6668 1.33333C9.19407 1.33333 8.00016 2.52724 8.00016 3.99999ZM8.00016 3.99999H5.3335C4.59712 3.99999 4.00016 3.40304 4.00016 2.66666C4.00016 1.93028 4.59712 1.33333 5.3335 1.33333C6.80626 1.33333 8.00016 2.52724 8.00016 3.99999ZM8.00016 3.99999V14.6667" />
     </svg>
   );
@@ -40,7 +40,7 @@ export function GiftIcon({ className, size = 16 }: IconProps) {
 export function SunIcon({ className, size = 16 }: IconProps) {
   const s = size;
   return (
-    <svg {...svg(s, s, "0 0 16 16", className)} stroke="#28303F" strokeWidth="1.5" strokeLinecap="round">
+    <svg {...svg(s, s, "0 0 16 16", className)} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
       <path d="M8.00016 1.33334V2M8.00016 14V14.6667M12.7142 3.28596L12.2428 3.75737M3.75753 12.2426L3.28612 12.714M14.6668 8H14.0002M2.00016 8H1.3335M12.7142 12.714L12.2428 12.2426M3.75753 3.75737L3.28612 3.28596M12.0002 8C12.0002 10.2091 10.2093 12 8.00016 12C5.79102 12 4.00016 10.2091 4.00016 8C4.00016 5.79086 5.79102 4 8.00016 4C10.2093 4 12.0002 5.79086 12.0002 8Z" />
     </svg>
   );
@@ -49,7 +49,7 @@ export function SunIcon({ className, size = 16 }: IconProps) {
 export function LogoutIcon({ className, size = 16 }: IconProps) {
   const s = size;
   return (
-    <svg {...svg(s, s, "0 0 16 16", className)} stroke="#28303F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg {...svg(s, s, "0 0 16 16", className)} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M13.3335 9.33333L14.1954 8.47141C14.4558 8.21106 14.4558 7.78895 14.1954 7.5286L13.3335 6.66667" />
       <path d="M14.0002 8H8.66683M4.00016 13.3333C2.5274 13.3333 1.3335 12.1394 1.3335 10.6667V5.33333C1.3335 3.86058 2.5274 2.66667 4.00016 2.66667M4.00016 13.3333C5.47292 13.3333 6.66683 12.1394 6.66683 10.6667V5.33333C6.66683 3.86058 5.47292 2.66667 4.00016 2.66667M4.00016 13.3333H9.3335C10.8063 13.3333 12.0002 12.1394 12.0002 10.6667M4.00016 2.66667H9.3335C10.8063 2.66667 12.0002 3.86058 12.0002 5.33333" />
     </svg>

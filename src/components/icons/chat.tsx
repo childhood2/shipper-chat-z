@@ -95,8 +95,17 @@ export function ArchiveIconSvg({ className, size = 18 }: IconProps) {
 
 export function ChecksIcon({ className, size = 16 }: IconProps) {
   return (
-    <svg {...svgProps(size, "0 0 16 16", className)}>
-      <path d="M4.66665 8.00001L7.99998 11.3333L14.6666 4.66667M1.33331 8.00001L4.66665 11.3333M7.99998 8.00001L11.3333 4.66667" stroke="var(--icon-neutral-soft, #8796AF)" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
+    <svg {...svgProps(size, "0 0 16 16", className)} stroke="var(--icon-neutral-soft, #8796AF)" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.66665 8.00001L7.99998 11.3333L14.6666 4.66667M1.33331 8.00001L4.66665 11.3333M7.99998 8.00001L11.3333 4.66667" />
+    </svg>
+  );
+}
+
+/** Single check – delivered / unread (recipient hasn't read) */
+export function CheckIcon({ className, size = 16 }: IconProps) {
+  return (
+    <svg {...svgProps(size, "0 0 16 16", className)} stroke="var(--icon-neutral-soft, #8796AF)" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 8L6.5 11.5L13 5" />
     </svg>
   );
 }

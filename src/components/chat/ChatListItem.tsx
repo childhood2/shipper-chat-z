@@ -2,7 +2,7 @@
 
 import { Avatar } from "@/components/ui/Avatar";
 import { SlideActionButton } from "@/components/ui/SlideActionButton";
-import { ArchiveIconSvg, MessageCircleIcon, ChecksIcon } from "@/components/icons";
+import { ArchiveIconSvg, CheckIcon, ChecksIcon } from "@/components/icons";
 
 export type ChatListItemProps = {
   id: string;
@@ -75,7 +75,11 @@ export function ChatListItem({
               {preview}
             </span>
           )}
-          <ChecksIcon className="shrink-0 text-icon-soft" size={16} />
+          {isUnread ? (
+            <CheckIcon className="shrink-0 text-icon-soft" size={16} />
+          ) : (
+            <ChecksIcon className="shrink-0 text-icon-soft" size={16} />
+          )}
         </div>
       </div>
     </>
@@ -86,14 +90,6 @@ export function ChatListItem({
       className="w-full flex items-stretch gap-2 pl-3"
       data-chat-id={id}
     >
-      {isUnread && onMarkUnread && (
-        <SlideActionButton
-          label="Unread"
-          icon={<MessageCircleIcon size={18} className="text-white" />}
-          onClick={(e) => { e.stopPropagation(); onMarkUnread(); }}
-          className={actionClass}
-        />
-      )}
       <button
         type="button"
         onClick={onClick}

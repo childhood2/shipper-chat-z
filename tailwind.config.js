@@ -11,6 +11,7 @@ module.exports = {
         surface: {
           default: "var(--bg-surface-default)",
           weak: "var(--bg-surface-weak)",
+          hover: "#F0F0ED",
         },
         text: {
           main: "var(--text-neutral-main)",

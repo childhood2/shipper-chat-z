@@ -10,6 +10,7 @@ export {
   SendIcon,
   MessageCircleIcon,
   ArchiveIconSvg,
+  CheckIcon,
   ChecksIcon,
   PencilPlusIcon,
 } from "./chat";

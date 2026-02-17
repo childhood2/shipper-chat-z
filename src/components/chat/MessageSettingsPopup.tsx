@@ -34,7 +34,7 @@ export function MessageSettingsPopup({
     >
       <button
         type="button"
-        className={`${rowBase} bg-[#F3F3EE]`}
+        className={rowBase}
         onClick={() => { onAction("mark-unread"); onClose(); }}
       >
         <MessageCircleIcon className="shrink-0 text-icon-main" size={16} />
