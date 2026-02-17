@@ -14,6 +14,12 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next();
     }
 
+    // Skip auth check if NEXTAUTH_SECRET is not set (e.g. during build or misconfigured)
+    if (!process.env.NEXTAUTH_SECRET) {
+      console.warn("NEXTAUTH_SECRET not set, allowing request");
+      return NextResponse.next();
+    }
+
     const token = await getToken({
       req: request,
       secret: process.env.NEXTAUTH_SECRET,
